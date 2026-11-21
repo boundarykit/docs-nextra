@@ -1,0 +1,16 @@
+# Delete token
+
+`DELETE /v1/tokens/{id}`
+
+## Parameters
+
+| Name | Location | Required |
+| --- | --- | --- |
+| `X-Organization-Id` | header | Yes |
+| `id` | path | Yes |
+
+## Responses
+
+- **204** Record removed.
+- **403** Scope denied
+- **503** Service unavailable

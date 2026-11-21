@@ -1,0 +1,34 @@
+# Import policy bundle
+
+`POST /v2/policies/import`
+
+## Parameters
+
+| Name | Location | Required |
+| --- | --- | --- |
+| `X-Organization-Id` | header | Yes |
+
+## Request body
+
+```json
+{
+  "multipart/form-data": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "file": {
+          "type": "string",
+          "format": "binary"
+        }
+      }
+    }
+  }
+}
+```
+
+## Responses
+
+- **200** Request completed.
+- **202** Queued for processing.
+- **403** Scope denied
+- **503** Service unavailable

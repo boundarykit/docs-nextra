@@ -1,0 +1,33 @@
+# Exchange scoped token
+
+`POST /v2/tokens/exchange`
+
+## Parameters
+
+| Name | Location | Required |
+| --- | --- | --- |
+| `X-Organization-Id` | header | Yes |
+
+## Request body
+
+```json
+{
+  "application/x-www-form-urlencoded": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "assertion": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
+```
+
+## Responses
+
+- **200** Request completed.
+- **202** Queued for processing.
+- **403** Scope denied
+- **503** Service unavailable

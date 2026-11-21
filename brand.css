@@ -1,0 +1,4 @@
+.brand-dark, .dark .brand-light { display: none; }
+.dark .brand-dark { display: block; }
+article a { color: #0F52BA; }
+.dark article a { color: #38BDF8; }

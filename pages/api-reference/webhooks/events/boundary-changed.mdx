@@ -1,0 +1,18 @@
+# boundary.changed
+
+BoundaryKit sends this event by HTTP POST.
+
+## Request body
+
+```json
+{
+  "required": true,
+  "content": {
+    "application/json": {
+      "schema": {
+        "$ref": "#/components/schemas/boundary.changed"
+      }
+    }
+  }
+}
+```

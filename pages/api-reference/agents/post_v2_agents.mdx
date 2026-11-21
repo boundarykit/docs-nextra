@@ -1,0 +1,28 @@
+# Create agent
+
+`POST /v2/agents`
+
+## Parameters
+
+| Name | Location | Required |
+| --- | --- | --- |
+| `X-Organization-Id` | header | Yes |
+
+## Request body
+
+```json
+{
+  "application/json": {
+    "schema": {
+      "$ref": "#/components/schemas/Record"
+    }
+  }
+}
+```
+
+## Responses
+
+- **200** Request completed.
+- **202** Queued for processing.
+- **403** Scope denied
+- **503** Service unavailable
