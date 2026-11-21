@@ -1,37 +1,26 @@
+---
+title: "Organization settings"
+description: "Use organization settings in a scoped workspace and verify the result with organizations records."
+---
+
 # Organization settings
 
-## Workspace context
+Organization settings — record the acceptance criteria for organization settings in the workspace change log.
 
-Use organization settings in a scoped workspace and verify the result with organizations records. Select a workspace with representative test data and record the active revision before you start. A response from a different workspace can look valid even when it contains none of the expected records.
+## Symptom
 
-Record the workspace owner and the identity responsible for this change. Confirm that the administrative credential is scoped to the correct organization. Use a second identity with reader access to verify the result.
+The reported state of organization settings differs between the dashboard and the latest receipt.
 
-![BoundaryKit request flow](/assets/images/diagrams/flow-09.svg)
+## First observation
 
-## Read the baseline
+Record the administrative subject and target organization. Use a second, read-only identity to check the effective state after propagation.
 
-Request the first page of organizations using the v2 endpoint. Supply the organization explicitly on every request. Load the key from your shell environment and keep the expanded command out of build logs.
+## Decision tree
 
-```bash
-curl --fail-with-body "https://api.boundarykit.com/v2/organizations" -H "X-API-Key: $BKIT_KEY" -H "X-Organization-Id: $BKIT_ORG"
-```
+1. Record the acceptance criteria for organization settings in the workspace change log.
+2. If the revision differs, split the interval at deployment time.
+3. If it matches, inspect a single trace before changing alert thresholds.
 
-Compare the returned identifiers with the records you expect to see in this workspace. An empty result is a successful read. Verify the workspace selection before creating a replacement record or changing a policy.
+## Recovery evidence
 
-## Verify the result
-
-Repeat the read with a credential scoped to a separate test organization. Check the response status before processing the body. Preserve the workspace identifier and response time alongside the revision so another operator can reproduce the observation.
-
-| Response | Operator action |
-| --- | --- |
-| 200 | Inspect the returned organizations records. |
-| 403 | Verify the organization and identity scope. |
-| 503 | Retry the read after a bounded delay. |
-
-> Keep credentials out of the evidence bundle. Store a request identifier and a redacted response instead.
-
-For a walkthrough of the service boundary, see [Runtime architecture](/documentation/architecture/#workspace-context).
-
-## Acceptance check
-
-Record the acceptance criteria for organization settings in the workspace change log. Run the check with a known input and save the observed result beside the configuration revision. Repeat after promotion using the same input and compare both records.
+Inspect the receipt for **Organization settings**. Compare its organization and revision with the values in the fixture before interpreting the result.

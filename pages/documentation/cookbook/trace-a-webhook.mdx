@@ -1,50 +1,35 @@
+---
+title: "Trace a webhook"
+description: "Use trace a webhook in a scoped workspace and verify the result with integrations records."
+---
+
 # Trace a webhook
 
-## Workspace context
+Trace a webhook — correlate the delivery attempt with its originating event.
 
-Use trace a webhook in a scoped workspace and verify the result with integrations records. Select a workspace with representative test data and record the active revision before you start. A response from a different workspace can look valid even when it contains none of the expected records.
+## Trace a webhook
 
-Start in a preview workspace with a dedicated service identity. Record its current permissions, run the example against a single resource, and confirm the result in the audit stream before changing the production configuration.
+Correlate the delivery attempt with its originating event. Use a staging organization with the same grants as production. Keep the previous manifest digest available until the first production receipt has been inspected.
 
-![BoundaryKit request flow](/assets/images/diagrams/flow-03.svg)
-
-## Read the baseline
-
-Request the first page of integrations using the v2 endpoint. Supply the organization explicitly on every request. Load the key from your shell environment and keep the expanded command out of build logs.
+## Capture the baseline
 
 ```bash
 curl --fail-with-body "https://api.boundarykit.com/v2/integrations" -H "X-API-Key: $BKIT_KEY" -H "X-Organization-Id: $BKIT_ORG"
 ```
 
-```typescript
-const result = await fetch("https://api.boundarykit.com/v2/integrations", {headers: {"X-API-Key": process.env.BKIT_KEY!, "X-Organization-Id": process.env.BKIT_ORG!}});
-if (!result.ok) throw Error(String(result.status));
-console.log(await result.json());
+## Apply to a single workspace
+
+Use the following checkpoint while the staging change is isolated.
+
+```json
+{
+  "case": "trace-a-webhook",
+  "organization": "org_stage",
+  "revision": "rev_31",
+  "checkpoint": "Correlate the delivery attempt with its originating event."
+}
 ```
 
-```python
-import os, requests
-response = requests.get("https://api.boundarykit.com/v2/integrations", headers={"X-API-Key": os.environ["BKIT_KEY"], "X-Organization-Id": os.environ["BKIT_ORG"]}, timeout=10)
-response.raise_for_status()
-print(response.json())
-```
+## Rollback condition
 
-Compare the returned identifiers with the records you expect to see in this workspace. An empty result is a successful read. Verify the workspace selection before creating a replacement record or changing a policy.
-
-## Verify the result
-
-Repeat the read with a credential scoped to a separate test organization. Check the response status before processing the body. Preserve the workspace identifier and response time alongside the revision so another operator can reproduce the observation.
-
-| Response | Operator action |
-| --- | --- |
-| 200 | Inspect the returned integrations records. |
-| 403 | Verify the organization and identity scope. |
-| 503 | Retry the read after a bounded delay. |
-
-> Keep credentials out of the evidence bundle. Store a request identifier and a redacted response instead.
-
-For a walkthrough of the service boundary, see [Runtime architecture](/documentation/architecture/#workspace-context).
-
-## Acceptance check
-
-Correlate the delivery attempt with its originating event. Run the check with a known input and save the observed result beside the configuration revision. Repeat after promotion using the same input and compare both records.
+Inspect the receipt for **Trace a webhook**. Compare its organization and revision with the values in the fixture before interpreting the result. Restore the preceding manifest if a previously denied capability becomes available.

@@ -8,5 +8,6 @@ export default {
   "cookbook": "Cookbook",
   "integrations": "Integrations",
   "administration": "Administration",
-  "monitor": "Monitor"
+  "monitor": "Monitor",
+  "overview": "BoundaryKit"
 }

@@ -1,37 +1,152 @@
+---
+title: "Decision vocabulary"
+description: "Terms used in policy reviews and incident reports."
+---
+
 # Decision vocabulary
 
-## Workspace context
+Terms used in policy reviews and incident reports.
 
-Use decision vocabulary in a scoped workspace and verify the result with sandboxes records. Select a workspace with representative test data and record the active revision before you start. A response from a different workspace can look valid even when it contains none of the expected records.
+## ACL
 
-Resolve the calling identity, its workspace, and the policy revision before tracing a request. Keep these values together when comparing results from two environments.
+ACL — access control list. See [decision model](/documentation/documentation/core-concepts/) and [request path](/documentation/architecture/#request-path).
 
-![BoundaryKit request flow](/assets/images/diagrams/flow-04.svg)
+## API
 
-## Read the baseline
+API — application programming interface. See [decision model](/documentation/documentation/core-concepts/) and [request path](/documentation/architecture/#request-path).
 
-Request the first page of sandboxes using the v2 endpoint. Supply the organization explicitly on every request. Load the key from your shell environment and keep the expanded command out of build logs.
+## BaC
 
-```bash
-curl --fail-with-body "https://api.boundarykit.com/v2/sandboxes" -H "X-API-Key: $BKIT_KEY" -H "X-Organization-Id: $BKIT_ORG"
-```
+BaC — boundaries as code. See [decision model](/documentation/documentation/core-concepts/) and [request path](/documentation/architecture/#request-path).
 
-Compare the returned identifiers with the records you expect to see in this workspace. An empty result is a successful read. Verify the workspace selection before creating a replacement record or changing a policy.
+## CI
 
-## Verify the result
+CI — continuous integration. See [decision model](/documentation/documentation/core-concepts/) and [request path](/documentation/architecture/#request-path).
 
-Repeat the read with a credential scoped to a separate test organization. Check the response status before processing the body. Preserve the workspace identifier and response time alongside the revision so another operator can reproduce the observation.
+## DSL
 
-| Response | Operator action |
-| --- | --- |
-| 200 | Inspect the returned sandboxes records. |
-| 403 | Verify the organization and identity scope. |
-| 503 | Retry the read after a bounded delay. |
+DSL — domain-specific language. See [decision model](/documentation/documentation/core-concepts/) and [request path](/documentation/architecture/#request-path).
 
-> Keep credentials out of the evidence bundle. Store a request identifier and a redacted response instead.
+## IdP
 
-For a walkthrough of the service boundary, see [Runtime architecture](/documentation/architecture/#workspace-context).
+IdP — identity provider. See [decision model](/documentation/documentation/core-concepts/) and [request path](/documentation/architecture/#request-path).
 
-## Acceptance check
+## JWT
 
-Record the acceptance criteria for decision vocabulary in the workspace change log. Run the check with a known input and save the observed result beside the configuration revision. Repeat after promotion using the same input and compare both records.
+JWT — JSON web token. See [decision model](/documentation/documentation/core-concepts/) and [request path](/documentation/architecture/#request-path).
+
+## MCP
+
+MCP — Model Context Protocol. See [decision model](/documentation/documentation/core-concepts/) and [request path](/documentation/architecture/#request-path).
+
+## RBAC
+
+RBAC — role-based access control. See [decision model](/documentation/documentation/core-concepts/) and [request path](/documentation/architecture/#request-path).
+
+## SIEM
+
+SIEM — security information and event management. See [decision model](/documentation/documentation/core-concepts/) and [request path](/documentation/architecture/#request-path).
+
+## SLO
+
+SLO — service level objective. See [decision model](/documentation/documentation/core-concepts/) and [request path](/documentation/architecture/#request-path).
+
+## SSO
+
+SSO — single sign-on. See [decision model](/documentation/documentation/core-concepts/) and [request path](/documentation/architecture/#request-path).
+
+## actor
+
+actor — calling identity. See [decision model](/documentation/documentation/core-concepts/) and [request path](/documentation/architecture/#request-path).
+
+## allow
+
+allow — positive decision. See [decision model](/documentation/documentation/core-concepts/) and [request path](/documentation/architecture/#request-path).
+
+## archive
+
+archive — cold retention tier. See [decision model](/documentation/documentation/core-concepts/) and [request path](/documentation/architecture/#request-path).
+
+## boundary
+
+boundary — enforcement perimeter. See [decision model](/documentation/documentation/core-concepts/) and [request path](/documentation/architecture/#request-path).
+
+## capability
+
+capability — permitted action. See [decision model](/documentation/documentation/core-concepts/) and [request path](/documentation/architecture/#request-path).
+
+## claim
+
+claim — identity assertion. See [decision model](/documentation/documentation/core-concepts/) and [request path](/documentation/architecture/#request-path).
+
+## cursor
+
+cursor — continuation marker. See [decision model](/documentation/documentation/core-concepts/) and [request path](/documentation/architecture/#request-path).
+
+## deny
+
+deny — negative decision. See [decision model](/documentation/documentation/core-concepts/) and [request path](/documentation/architecture/#request-path).
+
+## digest
+
+digest — content hash. See [decision model](/documentation/documentation/core-concepts/) and [request path](/documentation/architecture/#request-path).
+
+## drift
+
+drift — revision mismatch. See [decision model](/documentation/documentation/core-concepts/) and [request path](/documentation/architecture/#request-path).
+
+## effect
+
+effect — rule outcome. See [decision model](/documentation/documentation/core-concepts/) and [request path](/documentation/architecture/#request-path).
+
+## export
+
+**export** — evidence bundle. See [decision model](/documentation/documentation/core-concepts/) and [request path](/documentation/architecture/#request-path).
+
+## grant
+
+grant — assigned permission. See [decision model](/documentation/documentation/core-concepts/) and [request path](/documentation/architecture/#request-path).
+
+## hold
+
+hold — retention override. See [decision model](/documentation/documentation/core-concepts/) and [request path](/documentation/architecture/#request-path).
+
+## nonce
+
+nonce — one-time value. See [decision model](/documentation/documentation/core-concepts/) and [request path](/documentation/architecture/#request-path).
+
+## organization
+
+organization — tenant. See [decision model](/documentation/documentation/core-concepts/) and [request path](/documentation/architecture/#request-path).
+
+## plan
+
+plan — proposed change. See [decision model](/documentation/documentation/core-concepts/) and [request path](/documentation/architecture/#request-path).
+
+## receipt
+
+receipt — decision record. See [decision model](/documentation/documentation/core-concepts/) and [request path](/documentation/architecture/#request-path).
+
+## revision
+
+revision — immutable snapshot. See [decision model](/documentation/documentation/core-concepts/) and [request path](/documentation/architecture/#request-path).
+
+## role
+
+role — permission set. See [decision model](/documentation/documentation/core-concepts/) and [request path](/documentation/architecture/#request-path).
+
+## sandbox
+
+sandbox — isolated runtime. See [decision model](/documentation/documentation/core-concepts/) and [request path](/documentation/architecture/#request-path).
+
+## scope
+
+scope — access constraint. See [decision model](/documentation/documentation/core-concepts/) and [request path](/documentation/architecture/#request-path).
+
+## session
+
+session — bounded interaction. See [decision model](/documentation/documentation/core-concepts/) and [request path](/documentation/architecture/#request-path).
+
+## trace
+
+trace — correlated request path. See [decision model](/documentation/documentation/core-concepts/) and [request path](/documentation/architecture/#request-path).

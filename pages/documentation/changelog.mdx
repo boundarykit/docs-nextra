@@ -1,37 +1,56 @@
+---
+title: "Release changes"
+description: "Read from the deployed version forward before upgrading an adapter."
+---
+
 # Release changes
 
-## Workspace context
+Read from the deployed version forward before upgrading an adapter.
 
-Use release changes in a scoped workspace and verify the result with tokens records. Select a workspace with representative test data and record the active revision before you start. A response from a different workspace can look valid even when it contains none of the expected records.
+## 2026-11-18
 
-Resolve the calling identity, its workspace, and the policy revision before tracing a request. Keep these values together when comparing results from two environments.
+Security fix: reject receipts signed for a sibling organization.
 
-![BoundaryKit request flow](/assets/images/diagrams/flow-05.svg)
+## 2026-10-21
 
-## Read the baseline
+TypeScript SDK 2.8.0 preserves the request ID on timeout.
 
-Request the first page of tokens using the v2 endpoint. Supply the organization explicitly on every request. Load the key from your shell environment and keep the expanded command out of build logs.
+## 2026-09-16
 
-```bash
-curl --fail-with-body "https://api.boundarykit.com/v2/tokens" -H "X-API-Key: $BKIT_KEY" -H "X-Organization-Id: $BKIT_ORG"
-```
+Breaking change: apply requires the digest returned by plan.
 
-Compare the returned identifiers with the records you expect to see in this workspace. An empty result is a successful read. Verify the workspace selection before creating a replacement record or changing a policy.
+## 2026-08-12
 
-## Verify the result
+Deprecation: replace offset pagination with opaque cursors.
 
-Repeat the read with a credential scoped to a separate test organization. Check the response status before processing the body. Preserve the workspace identifier and response time alongside the revision so another operator can reproduce the observation.
+## 2026-07-15
 
-| Response | Operator action |
-| --- | --- |
-| 200 | Inspect the returned tokens records. |
-| 403 | Verify the organization and identity scope. |
-| 503 | Retry the read after a bounded delay. |
+Python SDK 2.4.1 handles empty 204 responses.
 
-> Keep credentials out of the evidence bundle. Store a request identifier and a redacted response instead.
+## 2026-06-17
 
-For a walkthrough of the service boundary, see [Runtime architecture](/documentation/architecture/#workspace-context).
+Security fix: revoke cached grants on membership removal.
 
-## Acceptance check
+## 2026-05-20
 
-Record the acceptance criteria for release changes in the workspace change log. Run the check with a known input and save the observed result beside the configuration revision. Repeat after promotion using the same input and compare both records.
+Export cursors now resume at the first unacknowledged record.
+
+## 2026-04-22
+
+Go SDK 2.2.0 adds context cancellation to list calls.
+
+## 2026-03-18
+
+Webhook receipts include delivery attempt numbers.
+
+## 2026-02-11
+
+Deprecated mutable revision aliases in approval records.
+
+## 2026-01-14
+
+Breaking change: v2 requires X-API-Key.
+
+## 2025-12-04
+
+Published the v1 compatibility window and migration checklist.

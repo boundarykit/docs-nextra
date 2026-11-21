@@ -8,5 +8,6 @@ export default {
   "billing": "Billing",
   "service-accounts": "Service accounts",
   "membership-reviews": "Membership reviews",
-  "organization-settings": "Organization settings"
+  "organization-settings": "Organization settings",
+  "security-compliance": "Security and compliance"
 }
